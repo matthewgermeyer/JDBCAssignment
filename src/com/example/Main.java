@@ -2,6 +2,7 @@ package com.example;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -76,6 +77,32 @@ public class Main {
             pStmt.setInt(5, 7);
             pStmt.executeUpdate();
 
+            pStmt = conn.prepareStatement ("SELECT * FROM person p LEFT JOIN address a ON p.id = a.person_id LEFT JOIN email e ON p.id = e.person_id");
+            ResultSet resultSet = pStmt.executeQuery();
+            System.out.println("id, name, dob, gender, contacted, id, street1, street2, city, stateAbbr, zip, person_id, id, email, person_id");
+            
+            while(resultSet.next()){
+             StringBuilder sb = new StringBuilder();
+             sb.append(resultSet.getInt("id")+",");
+                sb.append(resultSet.getString("name")+",");
+                sb.append(resultSet.getDate("dob")+",");
+                sb.append(resultSet.getString("gender")+",");
+                sb.append(resultSet.getDate("contacted")+",");
+                sb.append(resultSet.getInt("id")+",");
+                sb.append(resultSet.getString("street1")+",");
+                sb.append(resultSet.getString("street2")+",");
+                sb.append(resultSet.getString("city")+",");
+                sb.append(resultSet.getString("stateAbbr")+",");
+                sb.append(resultSet.getString("zip")+",");
+                sb.append(resultSet.getInt("person_id")+",");
+                sb.append(resultSet.getInt("id")+",");
+                sb.append(resultSet.getString("email")+",");
+                sb.append(resultSet.getInt("person_id")+",");
+                System.out.println(sb.toString());
+            }
+            
         }
+        
     }
+    
 }
